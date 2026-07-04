@@ -1,169 +1,36 @@
-# Sentiment Analysis Using NLP and Generative AI
+# IE 7500 Applied NLP: Sentiment140 Classification & Analysis
 
-### A Transformer-Based Classification and Summarization Pipeline
+## Overview
+This project develops a two-stage NLP pipeline classifying sentiment and summarizing tweet clusters. Our objective is to move beyond simple labels by extracting actionable thematic insights from social media data.
 
-**Group 03** | Abdellah Faleh · Masato Kan · Ambreen Khan · Carlo Porras
+## Research and Selection of Methods
+We evaluated models based on their ability to handle the "noisy" nature of social media (ambiguity, sarcasm, OOV words)[cite: 1].
+* **BiLSTM (Baseline):** Chosen for sequential context. We injected 100-dimensional pre-trained **GloVe** embeddings to compensate for vocabulary sparsity[cite: 2].
+* **BERT (State-of-the-Art):** A transformer-based architecture utilizing multi-head self-attention for deep semantic context[cite: 1].
+* **BART (Generative Summarization):** Implemented to synthesize thematic insights from tweet clusters[cite: 1].
 
----
+## Implementation Details
+* **Frameworks:** Models built using **PyTorch** and **Hugging Face**[cite: 1].
+* **Dataset:** 1.6M tweets from the **Sentiment140** benchmark[cite: 1].
+* **Optimization:** BERT training was scaled on an **A100 High-RAM GPU**, leveraging explicit CUDA memory management to handle dataset volume[cite: 2].
 
-## 📌 Project Overview
+## Evaluation Results
 
-This project builds a two-stage NLP pipeline that:
+| Model | Accuracy | Macro F1-Score | ROC-AUC | MCC |
+| :--- | :---: | :---: | :---: | :---: |
+| **BiLSTM (GloVe)** | 80.0% | 0.7977 | 0.8817 | 0.5954 |
+| **BERT (Uncased)** | 88.0% | 0.8784 | 0.9492 | 0.7568 |
 
-- Classifies tweets as positive or negative using three models of increasing complexity
-
-- Summarizes grouped tweet clusters using BART generative AI
-
-We use the **Sentiment140 dataset** — 1.6 million labeled tweets from Twitter.
-
----
-
-## 🗂️ Repository Structure
-
-nlp_project/
-
-├── README.md
-
-├── data/
-
-│ └── training.1600000.processed.noemoticon.csv
-
-├── notebooks/
-
-│ ├── 02_logistic_regression.ipynb
-
-│ ├── 03_lstm_model.ipynb
-
-│ ├── 04_bert_model.ipynb
-
-│ └── 05_bart_summarization.ipynb
-
-├── src/
-
-│ ├── preprocess.py
-
-│ └── evaluate.py
-
-├── models/
-
-├── results/
-
-└── docs/
-
-└── research_notes.md
-
----
-
-## 🧠 Models and Results
-
-| Model | Target | Achieved | Status |
-
-| Logistic Regression | F1 ≥ 0.77 | F1 = 0.805, Accuracy = 81%, ROC-AUC = 0.885 | ✅ Target met |
-
-| BiLSTM | F1 ≥ 0.83 | F1 = 0.7705, Accuracy = 77%, ROC-AUC = 0.853 | ⚠️ Below target |
-
-| BERT (fine-tuned) | F1 ≥ 0.90 | In progress | ⏳ Pending |
-
-| BART (summarization) | ROUGE-L ≥ 0.40 | ROUGE-L = 0.06 | ⚠️ Below target |
-
-Note on BiLSTM: Trained on CPU for 5 epochs. Loss decreased steadily (0.52 to 0.45), suggesting further improvement is possible with GPU access or more epochs.
-
-Note on BART: Applied zero-shot using facebook/bart-large-cnn. Low ROUGE-L reflects domain mismatch between BART pretraining on news articles and informal Twitter text. See research_notes.md for full discussion.
-
----
-
-## ⚙️ Setup Instructions
-
-1. Clone the repository
-
-git clone https://github.com/your-username/nlp_project.git
-
-cd nlp_project
-
-2. Install dependencies
-
-pip install -r requirements.txt
-
-3. Download the dataset
-
-Download training.1600000.processed.noemoticon.csv from:
-
-https://www.kaggle.com/datasets/kazanova/sentiment140
-
-Place the CSV file in the data/ folder.
-
-4. Run notebooks in order
-
-02_logistic_regression.ipynb
-
-03_lstm_model.ipynb
-
-04_bert_model.ipynb
-
-05_bart_summarization.ipynb
-
-Note: preprocess.py and evaluate.py must be in the same folder as the notebooks when running locally.
-
----
-
-## 📦 Requirements
-
-pandas
-
-numpy
-
-scikit-learn
-
-nltk
-
-torch
-
-transformers
-
-datasets
-
-rouge-score
-
-matplotlib
-
-seaborn
-
-jupyter
-
-joblib
-
----
-
-## 📊 Evaluation Metrics
-
-Primary: Macro-averaged F1-score
-
-Secondary: Accuracy, Precision, Recall, ROC-AUC, MCC
-
-Summarization: ROUGE-L, human Likert scale (1-5)
-
----
-
-## 👥 Team Roles
-
+## Team Roles
 | Member | Role |
+|---|---|
+| Abdellah Faleh | Project coordination, proposal writing, NLP preprocessing[cite: 1] |
+| Masato Kan | Data collection, dataset preparation, feature engineering[cite: 1] |
+| Ambreen Khan | Model evaluation, visualizations, ROUGE scoring, documentation[cite: 1] |
+| Carlo Porras | Model implementation (LR, LSTM, BERT) and BART integration[cite: 1] |
 
-| Abdellah Faleh | Project coordination, proposal writing, NLP preprocessing |
-
-| Masato Kan | Data collection, dataset preparation, feature engineering |
-
-| Ambreen Khan | Model evaluation, visualizations, ROUGE scoring, documentation |
-
-| Carlo Porras | Model implementation (LR, LSTM, BERT) and BART integration |
-
----
-
-## 📚 References
-
+## References
 Devlin et al. (2019). BERT: Pre-training of deep bidirectional transformers.
-
 Lewis et al. (2020). BART: Denoising sequence-to-sequence pre-training.
-
 Go et al. (2009). Twitter sentiment classification using distant supervision.
-
-Sokolova and Lapalme (2009). A systematic analysis of performance measures for classification tasks.
+Sokolova & Lapalme (2009). A systematic analysis of performance measures for classification tasks.
