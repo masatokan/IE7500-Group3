@@ -16,10 +16,26 @@ We evaluated models based on their ability to handle the "noisy" nature of socia
 
 ## Evaluation Results
 
-| Model | Accuracy | Macro F1-Score | ROC-AUC | MCC |
-| :--- | :---: | :---: | :---: | :---: |
-| **BiLSTM (GloVe)** | 80.0% | 0.7977 | 0.8817 | 0.5954 |
-| **BERT (Uncased)** | 88.0% | 0.8784 | 0.9492 | 0.7568 |
+## Model Comparison
+
+| Model              | Train size | Accuracy | Macro F1 | ROC-AUC | MCC    | Target | Met? |
+| ------------------ | ---------- | -------- | -------- | ------- | ------ | ------ | ---- |
+| Logistic Regression| 200k       | 0.81     | 0.805    | 0.885   | 0.61   | 0.77   | Yes  |
+| BiLSTM (GloVe)     | 800k       | 0.80     | 0.798    | 0.882   | 0.595  | 0.83   | No   |
+| BERT (uncased)     | 1.6M       | 0.88     | 0.878    | 0.949   | 0.757  | 0.90   | No   |
+
+For BART:
+| Metric   | Score  | Target      | Met? |
+| -------- | ------ | ----------- | ---- |
+| ROUGE-1  | 0.1915 | —           | —    |
+| ROUGE-2  | 0.0417 | —           | —    |
+| ROUGE-L  | 0.1715 | ≥ 0.40      | No   |
+
+**Note on comparability:** the models were trained on different dataset sizes
+(200k / 800k / 1.6M) due to compute constraints, so this table shows each model's
+best achieved result rather than a strictly controlled comparison. The main
+qualitative finding holds regardless: BERT is clearly strongest, while the
+LR baseline is competitive with the BiLSTM despite far less complexity.
 
 ## Team Roles
 | Member | Role |

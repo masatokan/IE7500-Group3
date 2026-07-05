@@ -1,1 +1,7 @@
 data/training.1600000.processed.noemoticon.csv
+models/bert_sentiment
+notebooks/glove_data
+.ipynb_checkpoints
+notebooks/.ipynb_checkpoints
+src/_pycache_
+.tmp.driveupload
