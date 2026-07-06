@@ -11,8 +11,9 @@ import pandas as pd
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 
-nltk.download('stopwords', quiet=True)
-nltk.download('punkt', quiet=True)
+# punkt_tab is required by word_tokenize in NLTK >= 3.9
+for _res in ('stopwords', 'punkt', 'punkt_tab'):
+    nltk.download(_res, quiet=True)
 
 STOPWORDS = set(stopwords.words('english'))
 

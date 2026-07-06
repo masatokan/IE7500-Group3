@@ -55,15 +55,21 @@
 
 ---
 
-## 4. Benchmarking Results (Expected)
+## 4. Benchmarking Results (Actual)
 
-Based on literature and pilot experiments on 10k sample:
+Final results on held-out test sets (see notebooks 02–05):
 
-| Model | Expected F1 | Expected Accuracy |
-|-------|-------------|-------------------|
-| Logistic Regression | 0.77–0.80 | 77–80% |
-| BiLSTM | 0.83–0.86 | 83–86% |
-| BERT (fine-tuned) | 0.90–0.92 | 91–93% |
+| Model | Train size | Accuracy | Macro F1 | Target | Met? |
+|-------|-----------|----------|----------|--------|------|
+| Logistic Regression | 200k | 0.81 | 0.805 | 0.77 | Yes |
+| BiLSTM (GloVe) | 800k | 0.80 | 0.798 | 0.83 | No |
+| BERT (fine-tuned) | 1.6M | 0.88 | 0.878 | 0.90 | No |
+| BART (summarization) | — | — | ROUGE-L 0.17 | 0.40 | No |
+
+Note: models were trained on different dataset sizes due to compute constraints,
+so the table reflects each model's best achieved result rather than a strictly
+controlled comparison. The LR baseline is competitive with the BiLSTM despite far
+less complexity; BERT is clearly strongest but fell short of the 0.90 target.
 
 ---
 
@@ -93,7 +99,7 @@ Based on literature and pilot experiments on 10k sample:
 
 ### BERT
 - Base model: `bert-base-uncased`, Max length: 64 tokens
-- LR: 2e-5 (AdamW), Warmup: 10% of steps, Epochs: 3, Batch size: 32
+- LR: 2e-5 (AdamW), Warmup: 10% of steps, Epochs: 3 planned (2 actually run due to compute limits), Batch size: 32
 
 ---
 

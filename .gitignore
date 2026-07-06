@@ -5,3 +5,8 @@ notebooks/glove_data
 notebooks/.ipynb_checkpoints
 src/_pycache_
 .tmp.driveupload
+# local/sync junk
+.tmp.drivedownload/
+.tmp.driveupload/
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
